@@ -1,0 +1,14 @@
+#ifndef CTABWIDGET_H
+#define CTABWIDGET_H
+
+#include <QTabWidget>
+
+class CTabWidget : public QTabWidget
+{
+public:
+    CTabWidget(QWidget* parent=0);
+    ~CTabWidget();
+
+};
+
+#endif // CTABWIDGET_H

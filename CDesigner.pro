@@ -28,7 +28,8 @@ SOURCES += \
     cscopesentence.cpp \
     ctabwidget.cpp \
     main.cpp \
-    widget.cpp
+    widget.cpp \
+    cbutton.cpp
 
 HEADERS  += \
     cbuttonbase.h \
@@ -45,6 +46,7 @@ HEADERS  += \
     cscopescope.h \
     cscopesentence.h \
     ctabwidget.h \
-    widget.h
+    widget.h \
+    cbutton.h
 
 DISTFILES +=
