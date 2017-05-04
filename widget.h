@@ -3,15 +3,10 @@
 
 #include <QWidget>
 #include <QTextBrowser>
-#include "cbuttonif.h"
-#include "cbuttonswitch.h"
-#include "cbuttonwhile.h"
-#include "cbuttondwhile.h"
-#include "cbuttonsentence.h"
-#include "cbuttonscope.h"
-#include "cbuttonfor.h"
-#include "cbuttonfunction.h"
+#include <QMenuBar>
+
 #include "ctabwidget.h"
+#include "cbutton.h"
 
 class Widget : public QWidget
 {
@@ -21,21 +16,29 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
 
+    // 处理变化信号
+public slots:
+    void doContentChanged();
+
 private:
     // 三个主面板
-    QWidget				*mToolBar;
-    CTabWidget			*mTabWidget;
-    QTextBrowser		*mTextBrowser;
+    QWidget			*mToolBar;
+    CTabWidget		*mTabWidget;
+    QTextBrowser	*mTextBrowser;
 
     // 工具按钮
-    CButtonScope		*mBtnScope;
-    CButtonSentence		*mBtnSentence;
-    CButtonIf			*mBtnIf;
-    CButtonWhile		*mBtnWhile;
-    CButtonDWhile		*mBtnDWhile;
-    CButtonSwitch		*mBtnSwitch;
-    CButtonFor			*mBtnFor;
-    CButtonFunction		*mBtnFunc;
+    CButton *mBtnIf;
+    CButton	*mBtnIfElse;
+    CButton	*mBtnWhile;
+    CButton	*mBtnDWhile;
+    CButton	*mBtnSwitch;
+    CButton	*mBtnFor;
+    CButton	*mBtnFunc;
+    CButton	*mBtnScope;
+    CButton	*mBtnStatement;
+
+    // 菜单栏
+    QMenuBar *m_menubar;
 
 };
 

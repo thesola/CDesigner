@@ -13,40 +13,43 @@ TEMPLATE = app
 
 
 SOURCES += \
-    cbuttonbase.cpp \
-    cbuttondwhile.cpp \
-    cbuttonfor.cpp \
-    cbuttonfunction.cpp \
-    cbuttonif.cpp \
-    cbuttonscope.cpp \
-    cbuttonsentence.cpp \
-    cbuttonswitch.cpp \
-    cbuttonwhile.cpp \
-    cscopebase.cpp \
-    cscopefunction.cpp \
-    cscopescope.cpp \
-    cscopesentence.cpp \
     ctabwidget.cpp \
     main.cpp \
     widget.cpp \
-    cbutton.cpp
+    cbutton.cpp \
+    cdef.cpp \
+    cstatement.cpp \
+    cscope.cpp \
+    cfunction.cpp \
+    csentence.cpp \
+    cif.cpp \
+    clineedit.cpp \
+    cifelse.cpp \
+    cwhile.cpp \
+    cdowhile.cpp \
+    cfor.cpp \
+    cbaffle.cpp \
+    cfunctiondialog.cpp
 
 HEADERS  += \
-    cbuttonbase.h \
-    cbuttondwhile.h \
-    cbuttonfor.h \
-    cbuttonfunction.h \
-    cbuttonif.h \
-    cbuttonscope.h \
-    cbuttonsentence.h \
-    cbuttonswitch.h \
-    cbuttonwhile.h \
-    cscopebase.h \
-    cscopefunction.h \
-    cscopescope.h \
-    cscopesentence.h \
     ctabwidget.h \
     widget.h \
-    cbutton.h
+    cbutton.h \
+    cdef.h \
+    cstatement.h \
+    cscope.h \
+    cfunction.h \
+    csentence.h \
+    cif.h \
+    clineedit.h \
+    cifelse.h \
+    cwhile.h \
+    cdowhile.h \
+    cfor.h \
+    cbaffle.h \
+    cfunctiondialog.h
 
 DISTFILES +=
+
+FORMS += \
+    cfunctiondialog.ui
