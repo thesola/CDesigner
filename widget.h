@@ -33,8 +33,8 @@ private:
     CButton	*mBtnDWhile;
     CButton	*mBtnSwitch;
     CButton	*mBtnFor;
-    CButton	*mBtnFunc;
-    CButton	*mBtnScope;
+//    CButton	*mBtnFunc;
+//    CButton	*mBtnScope;
 
     CButton	*mBtnSentence;
     CButton *mBtnBreakSentence;

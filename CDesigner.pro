@@ -63,3 +63,6 @@ DISTFILES +=
 
 FORMS += \
     cfunctiondialog.ui
+
+RESOURCES += \
+    icons.qrc

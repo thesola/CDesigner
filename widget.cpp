@@ -27,7 +27,7 @@ Widget::Widget(QWidget *parent) :
     mBtnWhile				= new CButton( g_strBtnWhile );
     mBtnDWhile				= new CButton( g_strBtnDoWhile );
     mBtnFor					= new CButton( g_strBtnFor );
-    mBtnFunc				= new CButton( g_strBtnFunction );
+//    mBtnFunc				= new CButton( g_strBtnFunction );
 
     QHBoxLayout *hlayout= new QHBoxLayout(mToolBar);
     hlayout->setMargin(0);
@@ -44,14 +44,15 @@ Widget::Widget(QWidget *parent) :
     hlayout->addWidget(mBtnDWhile);
     hlayout->addWidget(mBtnFor);
 
-    hlayout->addStretch();
-    hlayout->addWidget(mBtnFunc);
+//    hlayout->addStretch();
+//    hlayout->addWidget(mBtnFunc);
     hlayout->addStretch();	// 填充伸缩条
 
     // 添加全局标签 用于显示附加信息
 //    g_label = new QLabel("     双击\n 函数名以\n 修改函数\n 声明\n     main\n 函数不可\n 修改声明\n\nC.D.V. 1.0");
 //    g_label = new QLabel("     双击\n 函数名以\n 修改函数\n 声明\n\nC.D.V. 1.0");
-//    hlayout->addWidget(g_label);
+    g_label = new QLabel("Y.F. 2017");
+    hlayout->addWidget(g_label);
 
     // 初始化选项卡面板内容
     mTabWidget->setFont(QFont("宋体",12));
@@ -94,7 +95,7 @@ Widget::Widget(QWidget *parent) :
     connect( mTabWidget, SIGNAL(contentChanged()), this, SLOT(doContentChanged()) );
 
     // 关联添加函数信号
-    connect( mBtnFunc, SIGNAL(clicked()), mTabWidget, SLOT(doAddFunction()) );
+//    connect( mBtnFunc, SIGNAL(clicked()), mTabWidget, SLOT(doAddFunction()) );
 }
 
 Widget::~Widget()

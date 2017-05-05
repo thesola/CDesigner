@@ -44,7 +44,7 @@ signals:
     void contentChanged();
 
 public slots:
-    void deleteSelf();
+    virtual void deleteSelf();
 
 protected:
     QMenu *m_menu;

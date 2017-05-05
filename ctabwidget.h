@@ -2,7 +2,7 @@
 #define CTABWIDGET_H
 
 #include <QTabWidget>
-#include <QMenu>
+#include <QTextEdit>
 
 #include "cfunctiondialog.h"
 
@@ -14,13 +14,11 @@ public:
 
     QString toCCode()const;
 
-    // 读取与配置的文件头
-    QString readHeader()const;
-
 
 public slots:
     void doAddFunction();
     void doOkClicked();
+    void doTabBarClicked();
 
     // 重置面板为 main
     void clearTabs();
@@ -28,16 +26,17 @@ public slots:
     // 编译运行
     void runIt();
 
+
 private slots:
     void doModifyFunction(int index);
-    void doTabClose(int index);
+    void doTabClose();
 
 signals:
     void contentChanged();
 
 private:
     CFunctionDialog *m_cFunctionDialog;
-    QMenu			*m_menu;
+    QTextEdit		*m_textEdit;
 };
 
 #endif // CTABWIDGET_H

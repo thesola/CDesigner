@@ -89,3 +89,15 @@ void CScope::setAsFunctionScope(bool flag)
 {
     m_bIsFunctionScope = flag;
 }
+
+void CScope::deleteSelf()
+{
+    if( m_parentScope != NULL ){
+        CStatement::deleteSelf();
+        return;
+    }
+
+    if( this->parent() != NULL ){
+        ((CStatement*)this->parent())->deleteSelf();
+    }
+}

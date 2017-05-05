@@ -105,7 +105,8 @@ void CButton::setAsButtonSentence()
     mPixmap = g_getPixmapSentence(mWidth,mHeight);
     setIcon( mPixmap );				// 设置图标
     mTypeName = g_strBtnSentence;	// 设置类型名
-    setToolTip("单行语句");
+//    setToolTip("单行语句");
+    setToolTip("语句");
 }
 
 void CButton::setAsButtonFunction()

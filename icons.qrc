@@ -1,2 +1,6 @@
-<RCC/>
-
+<RCC>
+    <qresource prefix="/icons">
+        <file>add.ico</file>
+        <file>close.ico</file>
+    </qresource>
+</RCC>

@@ -8,7 +8,7 @@ QLabel *g_label = NULL;
 #include <QFont>
 
 QPen	g_Pen(QColor(255,66,93),2);
-QFont	g_Font("Times New Roman",15,QFont::Bold,true);
+QFont	g_Font("Times New Roman",10);
 int 	g_Margin = 6;
 
 QPixmap g_getPixmapIf(int width, int height)
@@ -212,6 +212,8 @@ QPixmap g_getPixmapSentence(int width, int height)
     painter.drawPath(path);
 
     // 绘制文字
+    painter.setFont( QFont("宋体",10) );
+//    painter.setFont(g_Font);
     painter.drawText(pixmap.rect(),Qt::AlignCenter,"语句");
 
     return pixmap;
@@ -290,6 +292,7 @@ QPixmap g_getPixMapBreakSentence(int width, int height)
     painter.drawPath(path);
 
     // 绘制文字
+    painter.setFont( g_Font );
     painter.drawText(pixmap.rect(),Qt::AlignCenter,"break");
 
     return pixmap;
@@ -319,6 +322,7 @@ QPixmap g_getPixMapContinueSentence(int width, int height)
     painter.drawPath(path);
 
     // 绘制文字
+    painter.setFont( g_Font );
     painter.drawText(pixmap.rect(),Qt::AlignCenter,"continue");
 
     return pixmap;
@@ -348,6 +352,7 @@ QPixmap g_getPixMapReturnSentence(int width, int height)
     painter.drawPath(path);
 
     // 绘制文字
+    painter.setFont( g_Font );
     painter.drawText(pixmap.rect(),Qt::AlignCenter,"return");
 
     return pixmap;

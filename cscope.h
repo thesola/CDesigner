@@ -33,6 +33,8 @@ public:
 
     void setAsFunctionScope(bool flag);
 
+    void deleteSelf();
+
 protected:
     QVBoxLayout			*m_vBoxLayout;
     bool				m_bIsFunctionScope;
