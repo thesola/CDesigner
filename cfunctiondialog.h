@@ -21,6 +21,8 @@ public:
     // 获取函数名
     QString funcName()const;
 
+    bool isOkClicked();
+
 signals:
     void okClicked();
 
@@ -29,10 +31,14 @@ private slots:
 
     void on_pb_cancel_clicked();
 
+    void closeEvent(QCloseEvent *e);
+
 private:
     Ui::CFunctionDialog *ui;
 
     CFunction	*m_cFunction;
+
+    bool		m_bOkClicked;
 };
 
 #endif // CFUNCTIONDIALOG_H

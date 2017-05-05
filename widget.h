@@ -35,7 +35,11 @@ private:
     CButton	*mBtnFor;
     CButton	*mBtnFunc;
     CButton	*mBtnScope;
-    CButton	*mBtnStatement;
+
+    CButton	*mBtnSentence;
+    CButton *mBtnBreakSentence;
+    CButton *mBtnContinueSentence;
+    CButton *mBtnReturnSentence;
 
     // 菜单栏
     QMenuBar *m_menubar;

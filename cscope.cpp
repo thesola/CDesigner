@@ -14,6 +14,7 @@ CScope::CScope()
     // 去除间隔
     m_vBoxLayout->setSpacing(0);
 
+    m_bIsFunctionScope = false;
 }
 
 void CScope::insertStastement(int index, CStatement *state)
@@ -37,8 +38,8 @@ void CScope::deleteStatement(CStatement *state)
 
     qDebug()<<"[CScope::deleteStatement] state : "<< state;
     m_vBoxLayout->removeWidget(state);
-    state->m_parentScope = NULL;
-    delete state;
+//    delete state;
+    state->hide();
 
     // 发出信号
     emit contentChanged();
@@ -52,13 +53,20 @@ int CScope::indexOfStatement(CStatement *state)
 
 void CScope::dropEvent(QDropEvent *e)
 {
-    // 将拖拽的控件直接添加进来
-    insertStastement( 0, getStatementByName( e->mimeData()->text() ) );
+    CStatement *newStatement = getStatementByName( e->mimeData()->text() );
+
+    if( newStatement == NULL ) {
+        return;
+    }
+
+    insertStastement( 0, newStatement );
 }
 
 void CScope::drawBackGround(QPainter &painter)
 {
-    painter.drawRect(2,2,this->width()-3,this->height()-3);
+    if( m_bIsFunctionScope ){
+        painter.drawRect( 2, 2, this->width()-4, this->height()-4 );
+    }
 }
 
 QString CScope::toCCode(int indent) const
@@ -75,4 +83,9 @@ QString CScope::toCCode(int indent) const
     strCode +=  strIndent + "}\n";
 
     return strCode;
+}
+
+void CScope::setAsFunctionScope(bool flag)
+{
+    m_bIsFunctionScope = flag;
 }

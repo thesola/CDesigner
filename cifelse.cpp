@@ -44,8 +44,8 @@ void CIfElse::resizeEvent(QResizeEvent *e)
     m_YesLabel->setGeometry( this->width()/7, this->height()/32.*3-15,30,30 );
     m_NotLabel->setGeometry( this->width()-this->width()/7, this->height()/32.*3-15,30,30 );
 
-    m_cYesScope->setGeometry( 1, this->height()/6-1, this->width()/2,this->height()-this->height()/6+1 );
-    m_cNotScope->setGeometry(this->width()/2-1,this->height()/6-1,this->width()/2+1,this->height()-this->height()/6+1);
+    m_cYesScope->setGeometry( 0, this->height()/6, this->width()/2,this->height()-this->height()/6 );
+    m_cNotScope->setGeometry(this->width()/2,this->height()/6,this->width()/2+1,this->height()-this->height()/6);
 
     // 设置挡板的位置
     m_baffle->setGeometry( this->width()/4, this->height()-this->height()/5, this->width()/2, this->height()/5 );

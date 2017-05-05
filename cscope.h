@@ -31,8 +31,11 @@ public:
 
     QString toCCode(int indent) const;
 
-private:
+    void setAsFunctionScope(bool flag);
+
+protected:
     QVBoxLayout			*m_vBoxLayout;
+    bool				m_bIsFunctionScope;
 };
 
 #endif // CSCOPE_H

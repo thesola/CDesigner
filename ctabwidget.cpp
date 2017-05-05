@@ -9,9 +9,13 @@
 
 CTabWidget::CTabWidget(QWidget *parent):QTabWidget(parent)
 {
+    // 设置标签可关闭
+    setTabsClosable(true);
+
     // 默认添加一个main函数
     CFunction *main = CFunction::getMainFunction();
     addTab(main,main->fucName());
+    setTabToolTip(0,"main 函数");
 
     // 设置模态对话框
     m_cFunctionDialog = new CFunctionDialog(this);
@@ -21,9 +25,6 @@ CTabWidget::CTabWidget(QWidget *parent):QTabWidget(parent)
     m_menu->addAction("修改");
     m_menu->addAction("添加");
     m_menu->addAction("删除");
-
-    // 设置标签可关闭
-    setTabsClosable(true);
 
     //  关联信号
     connect( main, SIGNAL(contentChanged()), this, SIGNAL(contentChanged()) );
@@ -37,7 +38,9 @@ QString CTabWidget::toCCode() const
     QString str, dec, def;
 
     // 文件头
+//    qDebug()<<"[CTabWidget::toCCode] readHeader() beg";
     str += readHeader();
+//    qDebug()<<"[ctabwidget::toccode] readheader() end";
 
     // 函数声明 & 定义
     for( int i=1, n=this->count() ; i < n ; ++i ){
@@ -58,6 +61,7 @@ QString CTabWidget::toCCode() const
         str += "\n";  // 函数之间空一行
     }
 
+//    qDebug()<<"[ctabwidget::toccode] end";
     return str;
 }
 
@@ -89,15 +93,26 @@ void CTabWidget::doAddFunction()
 {
     CFunction *newFunc = new CFunction("void","函数名");
 
-    addTab( newFunc, "" );
+    addTab( newFunc, "函数名" );
 
     setCurrentIndex( count()-1 );
 
     doModifyFunction( count()-1 );
 
-    connect( newFunc, SIGNAL(contentChanged()), this, SIGNAL(contentChanged()) );
+    qDebug()<<"[CTabWidget::doAddFunction] m_cFunctionDialog->isOkClicked() : "<<m_cFunctionDialog->isOkClicked();
 
-    emit contentChanged();
+    if( m_cFunctionDialog->isOkClicked() ){ // 确定添加
+        setTabToolTip( count()-1, "双击修改函数信息" );
+
+        connect( newFunc, SIGNAL(contentChanged()), this, SIGNAL(contentChanged()) );
+
+        emit contentChanged();
+
+    } else { // 取消添加
+        removeTab( count()-1 );
+
+    }
+
 }
 
 void CTabWidget::doOkClicked()
@@ -136,7 +151,7 @@ void CTabWidget::runIt()
     out.flush();
     file.close();
 
-    system( "mingw64\\bin\\gcc.exe temp.c 2> error.log && a.exe && pause && del temp.c a.exe error.log " );
+    system( "mingw491_32\\bin\\gcc.exe temp.c 2> error.log && a.exe && pause && del temp.c a.exe error.log " );
 
     file.setFileName("error.log");
     if( file.open( QIODevice::ReadOnly | QIODevice::Text ) && file.size() )

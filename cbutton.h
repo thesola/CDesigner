@@ -18,8 +18,12 @@ public:
     void setAsButtonFor();
     void setAsButtonSwitch();
     void setAsButtonScope();
-    void setAsButtonStatement();
     void setAsButtonFunction();
+    
+    void setAsButtonSentence();
+    void setAsButtonBreakSentence();
+    void setAsButtonContinueSentence();
+    void setAsButtonReturnSentence();
 
     QString typeName();
 

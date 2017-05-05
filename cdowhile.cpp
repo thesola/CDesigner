@@ -15,12 +15,15 @@ CDoWhile::CDoWhile()
 
 void CDoWhile::drawBackGround(QPainter &painter)
 {
-    painter.drawLine( 0,this->height()-2, this->width(),this->height()-2 );
+//    painter.drawLine( 0,this->height()-2, this->width(),this->height()-2 );
+    // 绘制拐线
+    painter.drawLine( this->width()-this->width()/10, 0, this->width()-this->width()/10, this->height()-this->height()/7 );
+    painter.drawLine( this->width()-this->width()/10, this->height()-this->height()/7, 0, this->height()-this->height()/7 );
 }
 
 void CDoWhile::resizeEvent(QResizeEvent *e)
 {
-    m_cScope->setGeometry( 0, -3, this->width()-this->width()/10,this->height()-this->height()/7 );
+    m_cScope->setGeometry( 0, 0, this->width()-this->width()/10,this->height()-this->height()/7 );
     m_lineEdit->setGeometry( 0, this->height()-this->height()/14-15,this->width(), 30 );
 
     CStatement::resizeEvent(e);

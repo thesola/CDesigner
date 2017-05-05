@@ -29,7 +29,7 @@ public:
 
     void mousePressEvent(QMouseEvent *e);
 
-private:
+protected:
     CLineEdit *m_LineEdit;
 };
 

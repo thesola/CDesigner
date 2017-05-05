@@ -24,9 +24,10 @@ void CFor::drawBackGround(QPainter &painter)
     // 绘制 exp1 与 exp2 之间的线
     painter.drawLine( 0, this->height()/10, this->width(), this->height()/10 );
     // 绘制 exp3 左边的竖线
-    painter.drawLine( this->width()/10+2, this->height()-this->height()/10, this->width()/10+2,this->height()-2 );
-    // 绘制底线
-    painter.drawLine( 0, this->height()-2,this->width(),this->height()-2 );
+    painter.drawLine( this->width()/10, this->height()/10.*2, this->width()/10,this->height() );
+    // 绘制两条短横
+    painter.drawLine( this->width()/10, this->height()/10.*2, this->width(), this->height()/10.*2 );
+    painter.drawLine( this->width()/10, this->height()/10.*9, this->width(), this->height()/10.*9 );
 }
 
 void CFor::resizeEvent(QResizeEvent *e)

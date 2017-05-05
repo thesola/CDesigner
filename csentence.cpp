@@ -21,7 +21,8 @@ CSentence::CSentence(QString text)
 
 void CSentence::drawBackGround(QPainter &painter)
 {
-    painter.drawLine(2,this->height()-2,this->width()-2,this->height()-2);
+ //   painter.drawLine(2,this->height()-2,this->width()-2,this->height()-2);
+//    painter.drawRect(2,2,this->width()-3,this->height()-3);
 }
 
 QString CSentence::toCCode(int indent) const

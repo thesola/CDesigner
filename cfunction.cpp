@@ -7,6 +7,8 @@ CFunction::CFunction()
 {
     // 初始化域
     m_cScope = new CScope();
+    m_cScope->setAsFunctionScope(true);
+
     // 设置布局 将域作为唯一控件占满面板
     QHBoxLayout *layout = new QHBoxLayout();
     layout->addWidget(m_cScope);
@@ -26,6 +28,8 @@ CFunction::CFunction(const QString &retType, const QString &fucName)
 
     // 初始化域
     m_cScope = new CScope();
+    m_cScope->setAsFunctionScope(true);
+
     // 设置布局 将域作为唯一控件占满面板
     QHBoxLayout *layout = new QHBoxLayout();
     layout->addWidget(m_cScope);
@@ -112,7 +116,7 @@ QString CFunction::toFuncDeclare() const
 {
     QString dec;
 
-    dec += m_strRetType + " " + m_strFucName + "( ";
+    dec += m_strRetType + " " + m_strFucName + "(";
 
     if( m_ArgList.isEmpty() ){
 
@@ -120,14 +124,18 @@ QString CFunction::toFuncDeclare() const
 
     } else {
 
+        dec += " ";
+
         dec += m_ArgList.at(0).first;
 
         for( int i=1,n=m_ArgList.size() ; i<n ; ++i ){
             dec += ", " + m_ArgList.at(i).first;
         }
+
+        dec += " ";
     }
 
-    dec += " );\n";
+    dec += ");\n";
 
     return dec;
 }
@@ -162,9 +170,14 @@ ArgList CFunction::StringToArg(const QString str)
 
         foreach (QString arg, argList) {
 
-            char a1[20], a2[20];
-            sscanf( arg.toLatin1().data(), "%s%s", a1, a2 );
-            list.append( Arg( a1, a2 ) );
+            QStringList argPair = arg.trimmed().split(" ");
+            if( argPair.size() == 2 ) { // 有两个参数
+                list.append( Arg( argPair.at(0), argPair.at(1) ) );
+
+            } else {
+                list.append( Arg( argPair.at(0), "" ) );
+
+            }
 
         }
 
@@ -172,8 +185,6 @@ ArgList CFunction::StringToArg(const QString str)
 
     return list;
 }
-
-#include <QDebug>
 
 void CFunction::doContentChanged()
 {

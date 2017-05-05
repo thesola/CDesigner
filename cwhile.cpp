@@ -24,7 +24,10 @@ void CWhile::resizeEvent(QResizeEvent *e)
 
 void CWhile::drawBackGround(QPainter &painter)
 {
-    painter.drawLine( 0, this->height()-2, this->width(),this->height() );
+ //   painter.drawLine( 0, this->height()-2, this->width(),this->height() );
+    // 绘制拐线
+    painter.drawLine( this->width()/10,this->height()/7, this->width(), this->height()/7 );
+    painter.drawLine( this->width()/10,this->height()/7, this->width()/10, this->height() );
 }
 
 QString CWhile::toCCode(int indent) const

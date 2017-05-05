@@ -29,7 +29,12 @@ SOURCES += \
     cdowhile.cpp \
     cfor.cpp \
     cbaffle.cpp \
-    cfunctiondialog.cpp
+    cfunctiondialog.cpp \
+    ccase.cpp \
+    cswitch.cpp \
+    cbreaksentence.cpp \
+    ccontinuesentence.cpp \
+    creturnsentence.cpp
 
 HEADERS  += \
     ctabwidget.h \
@@ -47,7 +52,12 @@ HEADERS  += \
     cdowhile.h \
     cfor.h \
     cbaffle.h \
-    cfunctiondialog.h
+    cfunctiondialog.h \
+    ccase.h \
+    cswitch.h \
+    cbreaksentence.h \
+    ccontinuesentence.h \
+    creturnsentence.h
 
 DISTFILES +=
 

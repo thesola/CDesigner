@@ -18,6 +18,7 @@ class CStatement : public QWidget
     Q_OBJECT
 public:
     explicit CStatement(QWidget *parent = 0);
+    virtual ~CStatement();
 
     void resizeEvent(QResizeEvent *e);
 
@@ -45,7 +46,7 @@ signals:
 public slots:
     void deleteSelf();
 
-private:
+protected:
     QMenu *m_menu;
 };
 
