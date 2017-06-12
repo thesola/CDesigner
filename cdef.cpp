@@ -214,7 +214,8 @@ QPixmap g_getPixmapSentence(int width, int height)
     // 绘制文字
     painter.setFont( QFont("宋体",10) );
 //    painter.setFont(g_Font);
-    painter.drawText(pixmap.rect(),Qt::AlignCenter,"语句");
+//    painter.drawText(pixmap.rect(),Qt::AlignCenter,"语句");
+    painter.drawText(pixmap.rect(),Qt::AlignCenter,"表达式/声明");
 
     return pixmap;
 }

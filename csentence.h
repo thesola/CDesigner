@@ -14,7 +14,8 @@ class CSentence : public CStatement
 {
     Q_OBJECT
 public:
-    CSentence(QString text="语句;");
+//    CSentence(QString text="语句;");
+    CSentence(QString text="表达式 ;");
 
     // getter
     QString text();

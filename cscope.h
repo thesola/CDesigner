@@ -30,10 +30,13 @@ public:
     void drawBackGround(QPainter& painter);
 
     QString toCCode(int indent) const;
+    QString toCCodeWithTime()const;
 
     void setAsFunctionScope(bool flag);
 
     void deleteSelf();
+
+    void mousePressEvent(QMouseEvent *e);
 
 protected:
     QVBoxLayout			*m_vBoxLayout;

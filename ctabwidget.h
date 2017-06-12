@@ -3,6 +3,7 @@
 
 #include <QTabWidget>
 #include <QTextEdit>
+#include <QProcess>
 
 #include "cfunctiondialog.h"
 
@@ -13,6 +14,7 @@ public:
     CTabWidget(QWidget* parent=0);
 
     QString toCCode()const;
+    QString toCCodeWithTime()const;
 
 
 public slots:
@@ -26,7 +28,6 @@ public slots:
     // 编译运行
     void runIt();
 
-
 private slots:
     void doModifyFunction(int index);
     void doTabClose();
@@ -37,6 +38,7 @@ signals:
 private:
     CFunctionDialog *m_cFunctionDialog;
     QTextEdit		*m_textEdit;
+    QProcess 		m_proc;
 };
 
 #endif // CTABWIDGET_H

@@ -32,6 +32,7 @@ public:
 
     // 返回C代码
     QString toCCode()const;
+    QString toCCodeWithTime()const;
 
     QString toFuncDeclare()const;
 

@@ -4,7 +4,7 @@
 
 
 // 设置大小
-const int CButton::mWidth 	= 90;
+const int CButton::mWidth 	= 120;
 const int CButton::mHeight	= 50;
 
 
@@ -106,7 +106,8 @@ void CButton::setAsButtonSentence()
     setIcon( mPixmap );				// 设置图标
     mTypeName = g_strBtnSentence;	// 设置类型名
 //    setToolTip("单行语句");
-    setToolTip("语句");
+//    setToolTip("语句");
+    setToolTip("表达式语句");
 }
 
 void CButton::setAsButtonFunction()

@@ -85,6 +85,30 @@ QString CScope::toCCode(int indent) const
     return strCode;
 }
 
+QString CScope::toCCodeWithTime() const
+{
+    QString strCode;
+
+    strCode +=  "{\n";
+
+    strCode += "    long t1 = currentTime();\n";
+
+    int i, n;
+    for( i=0, n=this->m_vBoxLayout->count()-1 ; i<n ; ++i ){
+        strCode +=  ((CStatement*)this->m_vBoxLayout->itemAt(i)->widget())->toCCode(g_s32Indent);
+    }
+
+    strCode += "    long t2 = currentTime();\n"
+                "    printf(\"\\n--------------------\\n运行时长 : %ld 毫秒\\n\", t2-t1);\n"
+                ;
+
+    strCode +=  ((CStatement*)this->m_vBoxLayout->itemAt(i)->widget())->toCCode(g_s32Indent);
+
+    strCode +=  "}\n";
+
+    return strCode;
+}
+
 void CScope::setAsFunctionScope(bool flag)
 {
     m_bIsFunctionScope = flag;
@@ -100,4 +124,12 @@ void CScope::deleteSelf()
     if( this->parent() != NULL ){
         ((CStatement*)this->parent())->deleteSelf();
     }
+}
+
+void CScope::mousePressEvent(QMouseEvent *e)
+{
+    if( m_bIsFunctionScope ){
+        return;
+    }
+    CStatement::mousePressEvent(e);
 }

@@ -52,6 +52,7 @@ Widget::Widget(QWidget *parent) :
 //    g_label = new QLabel("     双击\n 函数名以\n 修改函数\n 声明\n     main\n 函数不可\n 修改声明\n\nC.D.V. 1.0");
 //    g_label = new QLabel("     双击\n 函数名以\n 修改函数\n 声明\n\nC.D.V. 1.0");
     g_label = new QLabel("Y.F. 2017");
+    g_label->setFont(QFont("Kunstler Script",12));
     hlayout->addWidget(g_label);
 
     // 初始化选项卡面板内容

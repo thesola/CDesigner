@@ -26,7 +26,7 @@ CTabWidget::CTabWidget(QWidget *parent):QTabWidget(parent)
 
 QString CTabWidget::toCCode() const
 {
-    QString str, dec, def;
+    QString str, dec;
 
     // 文件头
     str += m_textEdit->toPlainText().trimmed() + "\n\n";
@@ -42,9 +42,40 @@ QString CTabWidget::toCCode() const
         str += dec + "\n";
     }
 
-    str += def;
-
     for( int i=1, n=this->count()-1 ; i < n ; ++i ){
+        CFunction *func = (CFunction*)this->widget(i);
+        str += func->toCCode();
+        str += "\n";  // 函数之间空一行
+    }
+
+    return str;
+}
+
+QString CTabWidget::toCCodeWithTime() const
+{
+    QString str, dec;
+
+    // 文件头
+    str += "#include<time.h>\n";
+    str += m_textEdit->toPlainText().trimmed() + "\n\n";
+
+    // 函数声明 & 定义
+    for( int i=2, n=this->count()-1 ; i < n ; ++i ){
+        CFunction *func = (CFunction*)this->widget(i);
+        dec += func->toFuncDeclare();
+    }
+
+    if( ! dec.isEmpty() )
+    {
+        str += dec + "\n";
+    }
+
+    // 添加 currentTime() 函数：
+    str += "long currentTime(){struct timeval tv;gettimeofday(&tv,NULL);return tv.tv_sec*1000+tv.tv_usec/1000;}\n";
+
+    str += ((CFunction*)this->widget(1))->toCCodeWithTime();
+
+    for( int i=2, n=this->count()-1 ; i < n ; ++i ){
         CFunction *func = (CFunction*)this->widget(i);
         str += func->toCCode();
         str += "\n";  // 函数之间空一行
@@ -170,20 +201,18 @@ void CTabWidget::runIt()
     in >> gccPath;
     file.close();
 
-    QString cmd( gccPath + " main.c 2> error.log && a.exe && pause && del main.c a.exe error.log ");
-
     // 将文本保存到文件
-    file.setFileName("main.c");
+    file.setFileName("cda.c");
     if( ! file.open(QIODevice::WriteOnly | QIODevice::Text) ){
         qDebug()<<"[CTabWidget::runIt] file open failed";
         return ;
     }
     QTextStream out(&file);
-    out << this->toCCode();
+    out << this->toCCodeWithTime();
     out.flush();
     file.close();
 
-//    system("mingw491_32\\bin\\gcc.exe main.c 2> error.log && a.exe && pause && del main.c a.exe error.log " );
+    QString cmd( gccPath + " cda.c 2> error.log && a.exe && pause && del cda.c a.exe error.log");
     system( cmd.toLatin1().data() );
 
     // 读取错误信息
@@ -199,7 +228,6 @@ void CTabWidget::runIt()
         }
 
         QMessageBox::warning(this, "编译信息", errorInfo);
-
         file.close();
     }
 

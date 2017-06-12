@@ -112,6 +112,32 @@ QString CFunction::toCCode() const
     return code;
 }
 
+QString CFunction::toCCodeWithTime() const
+{
+    QString code;
+
+    // 返回类型 + 函数名
+    code +=  m_strRetType + " " + m_strFucName + "(" ;
+
+    // 参数列表
+    if( m_ArgList.isEmpty() ){
+        code += "void";
+
+    } else {
+
+        // 参数列表
+        code += " " + argToString(m_ArgList) + " ";
+
+    }
+
+    code += ")\n";
+
+    // 域
+    code += m_cScope->toCCodeWithTime();
+
+    return code;
+}
+
 QString CFunction::toFuncDeclare() const
 {
     QString dec;
