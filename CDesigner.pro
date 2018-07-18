@@ -34,7 +34,16 @@ SOURCES += \
     cswitch.cpp \
     cbreaksentence.cpp \
     ccontinuesentence.cpp \
-    creturnsentence.cpp
+    creturnsentence.cpp \
+    cexpmodifydialog.cpp \
+    cdeclare.cpp \
+    cargwidget.cpp \
+    global_vars.cpp \
+    insertfunctiondialog.cpp \
+    caddincludedialog.cpp \
+    cadddefinedialog.cpp \
+    caddstructdialog.cpp \
+    caddenumdialog.cpp
 
 HEADERS  += \
     ctabwidget.h \
@@ -57,12 +66,27 @@ HEADERS  += \
     cswitch.h \
     cbreaksentence.h \
     ccontinuesentence.h \
-    creturnsentence.h
+    creturnsentence.h \
+    cexpmodifydialog.h \
+    cdeclare.h \
+    cargwidget.h \
+    global_vars.h \
+    insertfunctiondialog.h \
+    caddincludedialog.h \
+    cadddefinedialog.h \
+    caddstructdialog.h \
+    caddenumdialog.h
 
 DISTFILES +=
 
 FORMS += \
-    cfunctiondialog.ui
+    cfunctiondialog.ui \
+    cexpmodifydialog.ui \
+    insertfunctiondialog.ui \
+    caddincludedialog.ui \
+    cadddefinedialog.ui \
+    caddstructdialog.ui \
+    caddenumdialog.ui
 
 RESOURCES += \
     icons.qrc

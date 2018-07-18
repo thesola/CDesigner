@@ -38,6 +38,9 @@ public:
 
     void mousePressEvent(QMouseEvent *e);
 
+    // 2017/6/14 获取当前指定语句所能获取的变量列表
+    QStringList getVarsBefore(CStatement *state);
+
 protected:
     QVBoxLayout			*m_vBoxLayout;
     bool				m_bIsFunctionScope;

@@ -13,6 +13,7 @@
 #include "creturnsentence.h"
 #include <QMimeData>
 #include <QDebug>
+#include <cdeclare.h>
 
 CStatement::CStatement(QWidget *parent) : QWidget(parent)
 {
@@ -111,6 +112,8 @@ CStatement *CStatement::getStatementByName(QString name)
         return new CContinueSentence;
     } else if ( name == g_strBtnReturnSentence ) {
         return new CReturnSentence;
+    } else if ( name == g_strBtnDeclare ) {
+        return new CDeclare;
     }
 
     return NULL;
@@ -125,6 +128,28 @@ void CStatement::mousePressEvent(QMouseEvent *e)
     m_menu->popup(QCursor::pos());
 }
 
+// 获取当前声明的变量列表
+QStringList CStatement::getCurrentVars()
+{
+    qDebug()<<"[CStatement::getCurrentVars] begin";
+    if( m_parentScope != NULL )
+    {
+        return m_parentScope->getVarsBefore( this );
+    }
+    qDebug()<<"[CStatement::getCurrentVars] finish";
+    return QStringList();
+}
+
+CScope *CStatement::parentScope()
+{
+    return m_parentScope;
+}
+
+void CStatement::setParentScope(CScope *scope)
+{
+    m_parentScope = scope;
+}
+
 /*
  * BUG
  * 当前方法未结束 控件已被删除 函数调用异常
@@ -136,6 +161,8 @@ void CStatement::mousePressEvent(QMouseEvent *e)
  *
  * 实际：
  * 暂时不删除控件 泄漏点内存吧 程序不会崩 懒得改了
+ *
+ * 2017/6/14 或许可以用deleteLater 解决这个问题 有空再试
 */
 void CStatement::deleteSelf()
 {

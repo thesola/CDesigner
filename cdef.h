@@ -12,6 +12,8 @@ STRING(g_strBtnDoWhile)
 STRING(g_strBtnFor)
 STRING(g_strBtnFunction)
 STRING(g_strBtnScope)
+
+STRING(g_strBtnDeclare)
 STRING(g_strBtnSentence)
 STRING(g_strBtnBreakSentence)
 STRING(g_strBtnContinueSentence)
@@ -38,6 +40,7 @@ QPixmap g_getPixmapFor(int width, int height);
 QPixmap g_getPixmapFunction(int width, int height);
 QPixmap g_getPixmapScope(int width, int height);
 
+QPixmap g_getPixmapDeclare(int width, int height);
 QPixmap g_getPixmapSentence(int width, int height);
 QPixmap g_getPixMapBreakSentence(int width, int height);
 QPixmap g_getPixMapContinueSentence(int width, int height);

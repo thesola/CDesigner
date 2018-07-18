@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InsertFunctionDialog</class>
+ <widget class="QDialog" name="InsertFunctionDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>680</width>
+    <height>450</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>680</width>
+    <height>450</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>680</width>
+    <height>450</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>插入函数</string>
+  </property>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>621</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>宋体</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="title">
+    <string>常用库函数</string>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="spacing">
+     <number>15</number>
+    </property>
+    <item row="4" column="2">
+     <widget class="QRadioButton" name="rb_strcat">
+      <property name="text">
+       <string>strcat</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QRadioButton" name="rb_strcmp">
+      <property name="text">
+       <string>strcmp</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="3">
+     <widget class="QRadioButton" name="rb_strcpy">
+      <property name="text">
+       <string>strcpy</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="4">
+     <widget class="QRadioButton" name="rb_memcpy">
+      <property name="text">
+       <string>memcpy</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QRadioButton" name="rb_puts">
+      <property name="text">
+       <string>puts</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QRadioButton" name="rb_printf">
+      <property name="text">
+       <string>printf</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QRadioButton" name="rb_putchar">
+      <property name="text">
+       <string>putchar</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QRadioButton" name="rb_calloc">
+      <property name="text">
+       <string>calloc</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QRadioButton" name="rb_scanf">
+      <property name="text">
+       <string>scanf</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QRadioButton" name="rb_gets">
+      <property name="text">
+       <string>gets</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QRadioButton" name="rb_malloc">
+      <property name="text">
+       <string>malloc</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="4">
+     <widget class="QRadioButton" name="rb_fprintf">
+      <property name="text">
+       <string>fprintf</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0" colspan="2">
+     <widget class="QRadioButton" name="rb_clear">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="4">
+     <widget class="QRadioButton" name="rb_fscanf">
+      <property name="text">
+       <string>fscanf</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="2">
+     <widget class="QRadioButton" name="rb_free">
+      <property name="text">
+       <string>free</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QRadioButton" name="rb_getchar">
+      <property name="text">
+       <string>getchar</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QRadioButton" name="rb_strlen">
+      <property name="text">
+       <string>strlen</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QRadioButton" name="rb_sscanf">
+      <property name="text">
+       <string>sscanf</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QRadioButton" name="rb_sprintf">
+      <property name="text">
+       <string>sprintf</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="pb_ok">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>400</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>确定</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pb_cancel">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>400</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>取消</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>240</y>
+     <width>621</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>宋体</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="title">
+    <string>函数调用表达式</string>
+   </property>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>50</y>
+      <width>31</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>宋体</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>)</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>50</y>
+      <width>31</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>宋体</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>(</string>
+    </property>
+   </widget>
+   <widget class="QScrollArea" name="scrollArea">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>38</y>
+      <width>381</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOn</enum>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="args">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>381</width>
+       <height>79</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="vl_args">
+      <property name="spacing">
+       <number>4</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QComboBox" name="cb_funcName">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>46</y>
+      <width>181</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>宋体</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="editable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pb_AddArg">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>88</y>
+      <width>81</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>添加参数</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

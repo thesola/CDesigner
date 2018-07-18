@@ -8,6 +8,8 @@ CIf::CIf()
     m_lineEdit = new CLineEdit();
     m_cScope = new CScope();
 
+    m_lineEdit->setStatement(this);
+
     m_lineEdit->setParent(this);
     m_cScope->setParent(this);
 

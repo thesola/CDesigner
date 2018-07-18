@@ -215,7 +215,7 @@ QPixmap g_getPixmapSentence(int width, int height)
     painter.setFont( QFont("宋体",10) );
 //    painter.setFont(g_Font);
 //    painter.drawText(pixmap.rect(),Qt::AlignCenter,"语句");
-    painter.drawText(pixmap.rect(),Qt::AlignCenter,"表达式/声明");
+    painter.drawText(pixmap.rect(),Qt::AlignCenter,"表达式");
 
     return pixmap;
 }
@@ -358,4 +358,35 @@ QPixmap g_getPixMapReturnSentence(int width, int height)
 
     return pixmap;
 
+}
+
+
+QPixmap g_getPixmapDeclare(int width, int height)
+{
+    QPainterPath path;
+
+    // 高度为 20px 或者height/4
+    if( height/4 > 20 )
+    {
+        path.addRect(g_Margin,height/8*3,width-2*g_Margin,height/4);
+    }
+    else
+    {
+        path.addRect(g_Margin,height/2-10,width-2*g_Margin,20);
+    }
+
+    QPixmap pixmap(width,height);
+    pixmap.fill(Qt::transparent); // 透明化
+    QPainter painter(&pixmap);
+    painter.setPen(g_Pen);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.drawPath(path);
+
+    // 绘制文字
+    painter.setFont( QFont("宋体",10) );
+//    painter.setFont(g_Font);
+//    painter.drawText(pixmap.rect(),Qt::AlignCenter,"语句");
+    painter.drawText(pixmap.rect(),Qt::AlignCenter,"声明/定义");
+
+    return pixmap;
 }

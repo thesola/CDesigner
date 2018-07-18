@@ -36,6 +36,7 @@ private:
 //    CButton	*mBtnFunc;
 //    CButton	*mBtnScope;
 
+    CButton *mBtnDeclare;
     CButton	*mBtnSentence;
     CButton *mBtnBreakSentence;
     CButton *mBtnContinueSentence;

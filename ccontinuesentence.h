@@ -1,13 +1,17 @@
 #ifndef CCONTINUESENTENCE_H
 #define CCONTINUESENTENCE_H
 
-#include "csentence.h"
+#include "cstatement.h"
+#include <QLabel>
 
-class CContinueSentence : public CSentence
+class CContinueSentence : public CStatement
 {
 public:
     CContinueSentence();
-    ~CContinueSentence();
+    QString toCCode(int indent) const;
+    void drawBackGround(QPainter &painter);
+private:
+    QLabel *m_Label;
 };
 
 #endif // CCONTINUESENTENCE_H

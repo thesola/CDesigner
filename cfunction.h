@@ -40,6 +40,13 @@ public:
     static QString argToString(const ArgList argList);
     static ArgList StringToArg(const QString str);
 
+    // 获取库函数名称列表
+    static QStringList libFuncNames();
+    // 获取库函数参数列表
+    static QStringList libFuncArgs(const QString &funcName);
+    // 获取库函数所在文件名
+    static QString libFuncFileName(const QString &funcName);
+
 signals:
     void contentChanged();
 

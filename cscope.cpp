@@ -2,6 +2,8 @@
 #include <QDebug>
 #include "cdef.h"
 #include <QMimeData>
+#include "cdeclare.h"
+#include "cfunction.h"
 
 CScope::CScope()
 {
@@ -21,7 +23,7 @@ void CScope::insertStastement(int index, CStatement *state)
 {
     qDebug()<<"[CScope::insertStastement] index : "<<index<<" , state : "<< state;
     m_vBoxLayout->insertWidget(index,state);
-    state->m_parentScope = this;
+    state->setParentScope(this);
 
     // 发出信号
     emit contentChanged();
@@ -116,12 +118,12 @@ void CScope::setAsFunctionScope(bool flag)
 
 void CScope::deleteSelf()
 {
-    if( m_parentScope != NULL ){
+    if( m_parentScope != NULL ){ // 作为一个独立的对象来删除自身
         CStatement::deleteSelf();
         return;
     }
 
-    if( this->parent() != NULL ){
+    if( this->parent() != NULL ){ // 作为父对象的一部分来删除父对象
         ((CStatement*)this->parent())->deleteSelf();
     }
 }
@@ -132,4 +134,52 @@ void CScope::mousePressEvent(QMouseEvent *e)
         return;
     }
     CStatement::mousePressEvent(e);
+}
+
+// 2017/6/14 获取指定语句所能获取的语句列表
+QStringList CScope::getVarsBefore(CStatement *state)
+{
+    QStringList list;
+
+    // 获取当前域中的变量列表
+    int index = indexOfStatement(state);
+    if( index != -1 )
+    {
+        for( int i = index-1 ; i >= 0 ; --i ) // 逆序添加
+        {
+            CStatement *state = (CStatement*)m_vBoxLayout->itemAt(i)->widget();
+            if( state->inherits( "CDeclare" ) )
+            {
+                CDeclare *dec = (CDeclare*)state;
+//                list.append(dec->getVarName());
+                list += dec->getVarNames();
+            }
+        }
+    }
+
+    // 获取上级域的变量列表
+    if( m_parentScope != NULL ) // 当前域为独立控件
+    {
+        list += m_parentScope->getVarsBefore( this );
+    }
+    else if ( ! m_bIsFunctionScope ) // 当前为子控件且非函数域
+    {
+        CStatement *parentStatement = (CStatement*)this->parent();
+        list += parentStatement->parentScope()->getVarsBefore( parentStatement );
+    }
+    // 否则为函数域子控件 添加函数参数列表
+    else
+    {
+        CFunction *func = (CFunction*)this->parent();
+        ArgList args = func->argList();
+        foreach (Arg arg, args) {
+            if( ! arg.second.trimmed().isEmpty() )
+            {
+                list.append( arg.second.trimmed() );
+            }
+        }
+    }
+
+
+    return list;
 }

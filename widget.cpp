@@ -4,7 +4,6 @@
 #include <QDebug>
 #include <cdef.h>
 
-
 Widget::Widget(QWidget *parent) :
     QWidget(parent)
 {
@@ -16,6 +15,7 @@ Widget::Widget(QWidget *parent) :
 
     // 初始化工具栏内容
 //    mBtnScope 		= new CButton( g_strBtnScope );
+    mBtnDeclare				= new CButton( g_strBtnDeclare );
     mBtnSentence			= new CButton( g_strBtnSentence );
     mBtnBreakSentence		= new CButton( g_strBtnBreakSentence );
     mBtnContinueSentence	= new CButton( g_strBtnContinueSentence );
@@ -32,6 +32,7 @@ Widget::Widget(QWidget *parent) :
     QHBoxLayout *hlayout= new QHBoxLayout(mToolBar);
     hlayout->setMargin(0);
 //    vlayout->addWidget(mBtnScope);
+    hlayout->addWidget(mBtnDeclare);
     hlayout->addWidget(mBtnSentence);
     hlayout->addWidget(mBtnBreakSentence);
     hlayout->addWidget(mBtnContinueSentence);

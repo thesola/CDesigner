@@ -6,6 +6,7 @@
 CSentence::CSentence(QString text)
 {
     m_LineEdit = new CLineEdit(text);
+    m_LineEdit->setStatement(this);
 
     QHBoxLayout *layout = new QHBoxLayout();
     layout->addWidget(m_LineEdit);
@@ -19,6 +20,11 @@ CSentence::CSentence(QString text)
     connect( m_LineEdit, SIGNAL(textChanged(QString)), this, SIGNAL(contentChanged()) );
 }
 
+void CSentence::setText(QString text)
+{
+    m_LineEdit->setText(text);
+}
+
 void CSentence::drawBackGround(QPainter &painter)
 {
  //   painter.drawLine(2,this->height()-2,this->width()-2,this->height()-2);
@@ -28,7 +34,7 @@ void CSentence::drawBackGround(QPainter &painter)
 QString CSentence::toCCode(int indent) const
 {
     QString code(indent,' ');
-    code += m_LineEdit->text().trimmed() + "\n";
+    code += m_LineEdit->text().trimmed() + ";\n";
     return code;
 }
 

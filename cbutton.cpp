@@ -35,6 +35,7 @@ CButton::CButton(QString btnType, QWidget *parent) : QPushButton(parent)
         map.insert( g_strBtnBreakSentence,		setAsButtonBreakSentence );
         map.insert( g_strBtnContinueSentence,	setAsButtonContinueSentence );
         map.insert( g_strBtnReturnSentence,		setAsButtonReturnSentence );
+        map.insert( g_strBtnDeclare,			setAsButtonDeclare );
 
         // 调用对应函数
         if( map.contains(btnType) )
@@ -116,6 +117,14 @@ void CButton::setAsButtonFunction()
     setIcon( mPixmap );				// 设置图标
     mTypeName = g_strBtnFunction;	// 设置类型名
     setToolTip("点击添加函数");
+}
+
+void CButton::setAsButtonDeclare()
+{
+    mPixmap = g_getPixmapDeclare(mWidth,mHeight);
+    setIcon( mPixmap );				// 设置图标
+    mTypeName = g_strBtnDeclare;	// 设置类型名
+    setToolTip("变量声明/定义");
 }
 
 void CButton::setAsButtonBreakSentence()

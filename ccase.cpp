@@ -9,6 +9,9 @@ CCase::CCase()
     m_lineEdit = new CLineEdit("值");
     m_statements = new QWidget(this);
 
+    m_lineEdit->setStatement(this);
+    m_lineEdit->setText("值");
+
     m_lineEdit->setParent(this);
     m_vBoxLayout->setParent(m_statements);
     m_statements->setLayout(m_vBoxLayout);

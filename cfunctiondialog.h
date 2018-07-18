@@ -2,12 +2,14 @@
 #define CFUNCTIONDIALOG_H
 
 #include <QDialog>
+#include <QComboBox>
 #include "cfunction.h"
 
 namespace Ui {
 class CFunctionDialog;
 }
 
+// 函数信息对话框类
 class CFunctionDialog : public QDialog
 {
     Q_OBJECT
@@ -33,12 +35,19 @@ private slots:
 
     void closeEvent(QCloseEvent *e);
 
+    void on_pb_addArg_clicked();
+
+    // 删除指定参数组件
+    void doDeleteArg(QWidget* widget);
+
 private:
     Ui::CFunctionDialog *ui;
 
     CFunction	*m_cFunction;
 
     bool		m_bOkClicked;
+
 };
+
 
 #endif // CFUNCTIONDIALOG_H

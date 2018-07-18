@@ -4,6 +4,7 @@ CDoWhile::CDoWhile()
 {
     m_cScope = new CScope();
     m_lineEdit = new CLineEdit();
+    m_lineEdit->setStatement(this);
 
     m_cScope->setParent(this);
     m_lineEdit->setParent(this);

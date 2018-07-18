@@ -7,6 +7,7 @@ CSwitch::CSwitch()
     m_lineEdit = new CLineEdit("表达式");
     m_cases = new QWidget(this);
 
+    m_lineEdit->setStatement(this);
     m_lineEdit->setParent(this);
 
     m_vBoxLayout->setParent( m_cases );

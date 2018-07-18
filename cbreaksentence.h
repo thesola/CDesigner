@@ -2,12 +2,16 @@
 #define CBREAKSENTENCE_H
 
 #include "csentence.h"
+#include <QLabel>
 
-class CBreakSentence : public CSentence
+class CBreakSentence : public CStatement
 {
 public:
     CBreakSentence();
-    ~CBreakSentence();
+    QString toCCode(int indent) const;
+    void drawBackGround(QPainter &painter);
+private:
+    QLabel *m_Label;
 };
 
 #endif // CBREAKSENTENCE_H

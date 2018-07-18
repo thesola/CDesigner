@@ -7,6 +7,10 @@ CFor::CFor()
     m_exp2 = new CLineEdit();
     m_exp3 = new CLineEdit();
 
+    m_exp1->setStatement(this);
+    m_exp2->setStatement(this);
+    m_exp3->setStatement(this);
+
     m_cScope->setParent(this);
     m_exp1->setParent(this);
     m_exp2->setParent(this);

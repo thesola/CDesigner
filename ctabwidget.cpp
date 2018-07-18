@@ -9,9 +9,13 @@
 #include <windows.h>
 #include <QMessageBox>
 
+#include "global_vars.h"
 
 CTabWidget::CTabWidget(QWidget *parent):QTabWidget(parent)
 {
+    // 将全局变量指向自身
+    g_tabWidget = this;
+
     // 重置面板
     clearTabs();
 
@@ -84,8 +88,58 @@ QString CTabWidget::toCCodeWithTime() const
     return str;
 }
 
+QStringList CTabWidget::funcNames() const
+{
+    QStringList list;
+
+    for( int i=2, n=count()-1 ; i < n ; ++i )
+    {
+        CFunction *func = (CFunction*)this->widget(i);
+        list<<func->fucName();
+    }
+
+    return list;
+}
+
+QStringList CTabWidget::funcArgs(int funcIndex) const
+{
+    QStringList list;
+
+    funcIndex += 2;	// +2 为在tabWidget中的位置
+    if( 2 <= funcIndex && funcIndex < count()-1 )
+    {
+        CFunction *func = (CFunction*)this->widget(funcIndex);
+        foreach (Arg arg, func->argList()) {
+            list<<arg.second;
+        }
+    }
+
+    return list;
+}
+
+void CTabWidget::addLibFuncHeader(const QString &libFuncName)
+{
+    // 根据函数名查找头文件名
+    QString fileName = CFunction::libFuncFileName( libFuncName );
+qDebug()<<"fileName"<<fileName;
+    // 检索头文件是否已经包含
+    // 若未包含则包含该头文件
+    if( ! m_textEdit->toPlainText().contains( fileName ) ) // 这种检测方法是有问题的 但是很方便 2017/6/20
+    {
+        // 定位到最后一个头文件包含的位置 添加新头文件
+        QString text = m_textEdit->toPlainText();
+        int index = text.lastIndexOf( "#include" );
+        index = text.indexOf("\n",index);
+        text.insert(index+1,"#include<"+fileName+">\n");
+        m_textEdit->setText( text );
+    }
+
+}
+
 void CTabWidget::doAddFunction()
 {
+    int oldIndex = currentIndex();
+
     CFunction *newFunc = new CFunction("void","函数名");
 
     int index = insertTab( count()-1, newFunc, "函数名 " );
@@ -118,7 +172,54 @@ void CTabWidget::doAddFunction()
 //        removeTab( index );
         delete newFunc;
 
-        setCurrentIndex( index-1 );
+        setCurrentIndex( oldIndex );
+
+    }
+
+}
+
+void CTabWidget::addFunction(QString funcName, QStringList funcArgs)
+{
+    int oldIndex = currentIndex();
+
+    CFunction *newFunc = new CFunction("void",funcName);
+    ArgList argList;
+    foreach (QString argName, funcArgs) {
+        argList.append( Arg("int",argName) );
+    }
+    newFunc->setArgList( argList );
+
+    int index = insertTab( count()-1, newFunc, funcName+" " );
+
+    QPushButton *pbtn = new QPushButton("",newFunc);
+
+    pbtn->setFixedSize(18,18);
+    pbtn->setIcon(QIcon(":/icons/close.ico"));
+    pbtn->setToolTip("点击删除");
+
+    connect( pbtn, SIGNAL(clicked()), this, SLOT(doTabClose()) );
+
+    this->tabBar()->setTabButton( index, QTabBar::RightSide, pbtn );
+
+    setCurrentIndex( index );
+
+    doModifyFunction( index );
+
+    qDebug()<<"[CTabWidget::doAddFunction] m_cFunctionDialog->isOkClicked() : "<<m_cFunctionDialog->isOkClicked();
+
+    if( m_cFunctionDialog->isOkClicked() ){ // 确定添加
+        setTabToolTip( index, "双击修改函数信息" );
+
+        connect( newFunc, SIGNAL(contentChanged()), this, SIGNAL(contentChanged()) );
+
+        emit contentChanged();
+
+    } else { // 取消添加
+
+//        removeTab( index );
+        delete newFunc;
+
+        setCurrentIndex( oldIndex );
 
     }
 
@@ -153,8 +254,37 @@ void CTabWidget::clearTabs()
     m_textEdit->setAcceptDrops(false);
     m_textEdit->append("#include<stdio.h>\n");
     m_textEdit->setFont(QFont("Consolas",15));
-    addTab(m_textEdit,"    ");
+//    addTab(m_textEdit,"    ");
+    QWidget *funcInfo = new QWidget(this);
+    QPushButton *pb_addInclude	= new QPushButton("添加头文件");
+    QPushButton *pb_addDefine	= new QPushButton("添加宏定义");
+    QPushButton *pb_addEnum		= new QPushButton("添加枚举");
+    QPushButton *pb_addStruct	= new QPushButton("添加结构体/共用体");
 
+    connect( pb_addInclude, SIGNAL(clicked()), this, SLOT(addInclude()) );
+    connect( pb_addDefine, SIGNAL(clicked()), this, SLOT(addDefine()) );
+    connect( pb_addStruct, SIGNAL(clicked()), this, SLOT(addStruct()) );
+    connect( pb_addEnum, SIGNAL(clicked()), this, SLOT(addEnum()) );
+
+    QFont font("宋体",12);
+    pb_addInclude->setFont(font);
+    pb_addDefine->setFont(font);
+    pb_addStruct->setFont(font);
+    pb_addEnum->setFont(font);
+
+    QHBoxLayout *hBoxLayout = new QHBoxLayout;
+    hBoxLayout->addWidget(pb_addInclude);
+    hBoxLayout->addWidget(pb_addDefine);
+    hBoxLayout->addWidget(pb_addEnum);
+    hBoxLayout->addWidget(pb_addStruct);
+    hBoxLayout->addSpacerItem(new QSpacerItem(20,20,QSizePolicy::Expanding,QSizePolicy::Minimum));
+
+    QVBoxLayout *vBoxLayout = new QVBoxLayout(funcInfo);
+    vBoxLayout->addLayout( hBoxLayout );
+    vBoxLayout->addWidget( m_textEdit );
+
+    funcInfo->setLayout( vBoxLayout );
+    addTab( funcInfo,"    " );
 
     // 默认添加一个main函数
     CFunction *main = CFunction::getMainFunction();
@@ -263,4 +393,154 @@ void CTabWidget::doTabClose()
     setCurrentIndex( count()-2 );
 
     emit contentChanged();
+}
+
+/****************【编辑非函数部分】*****************************/
+#include "caddincludedialog.h"
+#include "cadddefinedialog.h"
+#include "caddstructdialog.h"
+#include "caddenumdialog.h"
+
+void CTabWidget::addInclude()
+{
+    QString strInclude = CAddIncludeDialog::getIncludeExp();
+
+    if( strInclude == "null" )
+    {
+        return;
+    }
+
+    QString text = m_textEdit->toPlainText();
+    int index = text.lastIndexOf("#include");
+    index = text.indexOf("\n",index) + 1;
+
+    if( ! text.contains(strInclude) )
+    {
+        text.insert( index, strInclude );
+        m_textEdit->setText(text);
+    }
+}
+
+void CTabWidget::addDefine()
+{
+    QString strDefine = CAddDefineDialog::getDefineExp();
+
+    if( strDefine == "null" )
+    {
+        return;
+    }
+
+    QString text = m_textEdit->toPlainText();
+    int index = text.lastIndexOf("#include");
+    index = text.indexOf("\n",index) + 1;
+
+    int indexDefine = text.lastIndexOf( "#define" );
+    if( indexDefine == -1 ) // 是第一个define
+    {
+        text.insert( index, "\n" + strDefine );
+    }
+    else
+    {
+        index = text.indexOf( "\n", indexDefine ) + 1;
+        text.insert( index, strDefine );
+    }
+
+    m_textEdit->setText(text);
+}
+
+int max(int a, int b)
+{
+    return a > b ? a : b;
+}
+
+void CTabWidget::addStruct()
+{
+    QString strStruct = CAddStructDialog::getStructExp();
+
+    if( strStruct == "null" )
+    {
+        return;
+    }
+
+    QString text = m_textEdit->toPlainText();
+    int index = text.lastIndexOf("#include");
+    index = text.indexOf("\n",index) + 1;
+
+    int indexStruct1 = text.lastIndexOf( "typedef struct" );
+    int indexStruct2 = text.lastIndexOf( "\nstruct" );
+    int indexStruct3 = text.lastIndexOf("typedef union");
+    int indexStruct4 = text.lastIndexOf( "\nunion" );
+    int indexStruct = max( indexStruct1, max( indexStruct2, max( indexStruct3, indexStruct4 ) ) );
+
+    if( indexStruct == -1 ) // 是第一个结构体
+    {
+        // 先找enum 再找define 再找include 确定index的位置
+        int indexEnum = text.lastIndexOf("\nenum");
+        if( indexEnum == -1 )
+        {
+            int indexDefine = text.lastIndexOf("#define");
+            if( indexDefine != -1 )
+            {
+                index = text.indexOf("\n",indexDefine);
+            }
+        }
+        else
+        {
+            index = text.indexOf( "}", indexEnum );
+            index = text.indexOf( "\n", index );
+        }
+
+        text.insert( index+1, "\n" + strStruct );
+
+    }
+    else
+    {
+        index = text.indexOf("}",indexStruct);
+        index = text.indexOf( "\n", index );
+        text.insert( index+1, "\n" + strStruct );
+    }
+
+    m_textEdit->setText(text);
+}
+
+void CTabWidget::addEnum()
+{
+    QString strEnum = CAddEnumDialog::getEnumExp();
+
+    if( strEnum == "null" )
+    {
+        return;
+    }
+
+    QString text = m_textEdit->toPlainText();
+    int index = text.lastIndexOf("#include");
+    index = text.indexOf("\n",index) + 1;
+
+
+    int indexEnum = text.lastIndexOf("\nenum");
+    if( indexEnum == -1 ) // 第一个enum
+    {
+        // 首先查找define
+        // 再查找include
+        int indexDefine = text.lastIndexOf("#define");
+        if( indexDefine != -1 )
+        {
+            index = text.indexOf("\n",indexDefine);
+            text.insert( index+1, "\n" + strEnum );
+        }
+        else
+        {
+            text.insert( index, "\n" + strEnum );
+        }
+
+    }
+    else
+    {
+        index = text.indexOf( "}", indexEnum );
+        index = text.indexOf("\n", index);
+        text.insert( index+1, "\n" + strEnum );
+    }
+
+
+    m_textEdit->setText(text);
 }

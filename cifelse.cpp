@@ -21,6 +21,8 @@ CIfElse::CIfElse()
     m_cNotScope->setParent(this);
     m_lineEdit->setParent(this);
 
+    m_lineEdit->setStatement(this);
+
     // 设置挡板
     m_baffle = new CBaffle(this);
 

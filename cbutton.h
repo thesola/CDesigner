@@ -20,6 +20,7 @@ public:
     void setAsButtonScope();
     void setAsButtonFunction();
     
+    void setAsButtonDeclare();
     void setAsButtonSentence();
     void setAsButtonBreakSentence();
     void setAsButtonContinueSentence();
